@@ -11,13 +11,11 @@ int z = 0, i = 0, j = 0, c = 0;
 // length of string to be parsed
 char ac[20], act[10];
 
-std::vector<char> stk;
-
 // This Function will check whether
 // the stk contain a production rule
 // which is to be Reduce.
 // Rules can be E->2E2 , E->3E3 , E->4
-void check(const std::string& input)
+void check(const std::string& input, std::vector<char>* stack)
 {
     // Coping string to be printed as action
     strcpy(ac,"REDUCE TO E -> ");
@@ -26,16 +24,16 @@ void check(const std::string& input)
     for(z = 0; z < c; z++)
     {
         // checking for producing rule E->4
-        if(stk[z] == '4')
+        if((*stack)[z] == '4')
         {
             printf("%s4", ac);
-            stk[z] = 'E';
-            stk[z + 1] = '\0';
+            (*stack)[z] = 'E';
+            (*stack)[z + 1] = '\0';
 
             //printing action
             std::cout << "\n$";
-            for (int cnt = 0; cnt < stk.size(); cnt++) {
-                std::cout << stk[cnt];
+            for (int cnt = 0; cnt < stack->size(); cnt++) {
+                std::cout << (*stack)[cnt];
             }
             std::cout << "\t" << input << "$\t";
         }
@@ -44,16 +42,16 @@ void check(const std::string& input)
     for(z = 0; z < c - 2; z++)
     {
         // checking for another production
-        if(stk[z] == '2' && stk[z + 1] == 'E' &&
-                stk[z + 2] == '2')
+        if((*stack)[z] == '2' && (*stack)[z + 1] == 'E' &&
+                (*stack)[z + 2] == '2')
         {
             printf("%s2E2", ac);
-            stk[z] = 'E';
-            stk[z + 1] = '\0';
-            stk[z + 2] = '\0';
+            (*stack)[z] = 'E';
+            (*stack)[z + 1] = '\0';
+            (*stack)[z + 2] = '\0';
             std::cout << "\n$";
-            for (int cnt = 0; cnt < stk.size(); cnt++) {
-                std::cout << stk[cnt];
+            for (int cnt = 0; cnt < stack->size(); cnt++) {
+                std::cout << (*stack)[cnt];
             }
             std::cout << "\t" << input << "$\t";
             i = i - 2;
@@ -64,16 +62,16 @@ void check(const std::string& input)
     for(z = 0; z < c - 2; z++)
     {
         //checking for E->3E3
-        if(stk[z] == '3' && stk[z + 1] == 'E' &&
-                stk[z + 2] == '3')
+        if((*stack)[z] == '3' && (*stack)[z + 1] == 'E' &&
+                (*stack)[z + 2] == '3')
         {
             printf("%s3E3", ac);
-            stk[z]='E';
-            stk[z + 1]='\0';
-            stk[z + 1]='\0';
+            (*stack)[z]='E';
+            (*stack)[z + 1]='\0';
+            (*stack)[z + 1]='\0';
             std::cout << "\n$";
-            for (int cnt=0; cnt < stk.size(); cnt++) {
-                std::cout << stk[cnt];
+            for (int cnt=0; cnt < stack->size(); cnt++) {
+                std::cout << (*stack)[cnt];
             }
             std::cout << "\t" << input << "$\t";
             i = i - 2;
@@ -84,6 +82,13 @@ void check(const std::string& input)
 
 const std::vector<std::string> kGrammarRules= { "E->2E2", "E->3E3", "E->4" };
 struct ShiftReduceParserDemo {
+    std::vector<char> stack;
+
+    void printStack() {
+        for (int cnt = 0; cnt < stack.size(); cnt++) {
+            std::cout << stack[cnt];
+        }
+    }
 
     static void print_rules() {
         std::cout << "GRAMMAR is" << std::endl;
@@ -95,8 +100,10 @@ struct ShiftReduceParserDemo {
 
 // Driver Function
 int main()
-{ 
+{
     ShiftReduceParserDemo::print_rules();
+
+    ShiftReduceParserDemo demo;
 
     std::string input("32423");
 
@@ -106,8 +113,8 @@ int main()
     // "SHIFT" is copied to act to be printed
     strcpy(act,"SHIFT");
 
-    // This will print Lables (column name)
-    std::cout << "\nstk \t input \t action";
+    // This will print Labels (column name)
+    std::cout << std::endl << "stack \t input \t action";
 
     // This will print the initial
     // values of stk and input
@@ -120,33 +127,31 @@ int main()
         std::cout << act;
 
         // Pushing into stk
-        stk.push_back(input[j]);
-        stk.push_back('\0');
+        demo.stack.push_back(input[j]);
+        demo.stack.push_back('\0');
 
         // Moving the pointer
         input[j]=' ';
 
         // Printing action
-        std::cout << "\n$";
-        for (int cnt = 0; cnt < stk.size(); cnt++) {
-            std::cout << stk[cnt];
-        }
+        std::cout << std::endl << "$";
+        demo.printStack();
         std::cout << "\t" << input << "$\t";
 
         // Call check function ..which will
         // check the stk whether its contain
         // any production or not
-        check(input);
+        check(input, &demo.stack);
     }
 
     // Rechecking last time if contain
     // any valid production then it will
     // replace otherwise invalid
-    check(input);
+    check(input, &demo.stack);
 
     // if top of the stk is E(starting symbol)
     // then it will accept the input
-    if(stk[0] == 'E' && stk[1] == '\0')
+    if(demo.stack[0] == 'E' && demo.stack[1] == '\0')
         printf("Accept\n");
     else //else reject
         printf("Reject\n");
