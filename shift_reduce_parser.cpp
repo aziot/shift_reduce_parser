@@ -30,22 +30,20 @@ struct ShiftReduceParserDemo {
 // the stk contain a production rule
 // which is to be Reduce.
 // Rules can be E->2E2 , E->3E3 , E->4
-void check(const std::string& input, std::vector<char>* stack)
+void check(const std::string& input, ShiftReduceParserDemo* demo)
 {
     for(int z = 0; z < input.length(); z++)
     {
         // checking for producing rule E->4
-        if((*stack)[z] == '4')
+        if(demo->stack[z] == '4')
         {
             std::cout << kAction << "4";
-            (*stack)[z] = 'E';
-            (*stack)[z + 1] = '\0';
+            demo->stack[z] = 'E';
+            demo->stack[z + 1] = '\0';
 
             //printing action
             std::cout << std::endl << "$";
-            for (int cnt = 0; cnt < stack->size(); cnt++) {
-                std::cout << (*stack)[cnt];
-            }
+            demo->printStack();
             std::cout << "\t" << input << "$\t";
         }
     }
@@ -53,17 +51,15 @@ void check(const std::string& input, std::vector<char>* stack)
     for(int z = 0; z < input.length() - 2; z++)
     {
         // checking for another production
-        if((*stack)[z] == '2' && (*stack)[z + 1] == 'E' &&
-                (*stack)[z + 2] == '2')
+        if(demo->stack[z] == '2' && demo->stack[z + 1] == 'E' &&
+                demo->stack[z + 2] == '2')
         {
             std::cout << kAction << "2E2";
-            (*stack)[z] = 'E';
-            (*stack)[z + 1] = '\0';
-            (*stack)[z + 2] = '\0';
+            demo->stack[z] = 'E';
+            demo->stack[z + 1] = '\0';
+            demo->stack[z + 2] = '\0';
             std::cout << "\n$";
-            for (int cnt = 0; cnt < stack->size(); cnt++) {
-                std::cout << (*stack)[cnt];
-            }
+            demo->printStack();
             std::cout << "\t" << input << "$\t";
             i = i - 2;
         }
@@ -72,17 +68,15 @@ void check(const std::string& input, std::vector<char>* stack)
     for(int z = 0; z < input.length() - 2; z++)
     {
         //checking for E->3E3
-        if((*stack)[z] == '3' && (*stack)[z + 1] == 'E' &&
-                (*stack)[z + 2] == '3')
+        if(demo->stack[z] == '3' && demo->stack[z + 1] == 'E' &&
+                demo->stack[z + 2] == '3')
         {
             std::cout << kAction << "3E3";
-            (*stack)[z]='E';
-            (*stack)[z + 1]='\0';
-            (*stack)[z + 1]='\0';
+            demo->stack[z]='E';
+            demo->stack[z + 1]='\0';
+            demo->stack[z + 1]='\0';
             std::cout << "\n$";
-            for (int cnt=0; cnt < stack->size(); cnt++) {
-                std::cout << (*stack)[cnt];
-            }
+            demo->printStack();
             std::cout << "\t" << input << "$\t";
             i = i - 2;
         }
@@ -127,13 +121,13 @@ int main()
         // Call check function ..which will
         // check the stk whether its contain
         // any production or not
-        check(input, &demo.stack);
+        check(input, &demo);
     }
 
     // Rechecking last time if contain
     // any valid production then it will
     // replace otherwise invalid
-    check(input, &demo.stack);
+    check(input, &demo);
 
     // if top of the stk is E(starting symbol)
     // then it will accept the input
