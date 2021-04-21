@@ -69,7 +69,7 @@ void check()
 // Driver Function
 int main()
 {
-    printf("GRAMMAR is -\nE->2E2 \nE->3E3 \nE->4\n");
+    std::cout << "GRAMMAR is -\nE->2E2 \nE->3E3 \nE->4\n";
 
     // a is input string
     strcpy(a,"32423");
@@ -81,7 +81,7 @@ int main()
     strcpy(act,"SHIFT");
 
     // This will print Lables (column name)
-    printf("\nstack \t input \t action");
+    std::cout << "\nstack \t input \t action";
 
     // This will print the initial
     // values of stack and input
