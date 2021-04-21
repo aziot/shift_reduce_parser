@@ -5,7 +5,7 @@
 using namespace std;
 
 // Global Variables
-int z = 0, i = 0, j = 0;
+int i = 0, j = 0;
 
 const std::vector<std::string> kGrammarRules= { "E->2E2", "E->3E3", "E->4" };
 static const char kAction[] = "REDUCE TO E -> ";
@@ -32,8 +32,7 @@ struct ShiftReduceParserDemo {
 // Rules can be E->2E2 , E->3E3 , E->4
 void check(const std::string& input, std::vector<char>* stack)
 {
-    // c=length of input string
-    for(z = 0; z < input.length(); z++)
+    for(int z = 0; z < input.length(); z++)
     {
         // checking for producing rule E->4
         if((*stack)[z] == '4')
@@ -51,7 +50,7 @@ void check(const std::string& input, std::vector<char>* stack)
         }
     }
 
-    for(z = 0; z < input.length() - 2; z++)
+    for(int z = 0; z < input.length() - 2; z++)
     {
         // checking for another production
         if((*stack)[z] == '2' && (*stack)[z + 1] == 'E' &&
@@ -70,7 +69,7 @@ void check(const std::string& input, std::vector<char>* stack)
         }
     }
 
-    for(z = 0; z < input.length() - 2; z++)
+    for(int z = 0; z < input.length() - 2; z++)
     {
         //checking for E->3E3
         if((*stack)[z] == '3' && (*stack)[z + 1] == 'E' &&
@@ -139,8 +138,8 @@ int main()
     // if top of the stk is E(starting symbol)
     // then it will accept the input
     if(demo.stack[0] == 'E' && demo.stack[1] == '\0')
-        printf("Accept\n");
+        std::cout << "Accept" << std::endl;
     else //else reject
-        printf("Reject\n");
+        std::cout << "Reject" << std::endl;
 }
 // This code is contributed by Shubhamsingh10
