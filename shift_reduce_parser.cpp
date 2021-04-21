@@ -72,10 +72,10 @@ int main()
     std::cout << "GRAMMAR is -\nE->2E2 \nE->3E3 \nE->4\n";
 
     // a is input string
-    strcpy(a,"32423");
+    std::string a("32423");
 
     // strlen(a) will return the length of a to c
-    c=strlen(a);
+    c = a.length();
 
     // "SHIFT" is copied to act to be printed
     strcpy(act,"SHIFT");
@@ -85,13 +85,13 @@ int main()
 
     // This will print the initial
     // values of stack and input
-    printf("\n$\t%s$\t", a);
+    std::cout << "\n$\t" << a << "$\t";
 
     // This will Run upto length of input string
-    for(i = 0; j < c; i++, j++)
+    for(int i = 0; j < c; i++, j++)
     {
         // Printing action
-        printf("%s", act);
+        std::cout << act;
 
         // Pushing into stack
         stk[i] = a[j];
@@ -101,7 +101,7 @@ int main()
         a[j]=' ';
 
         // Printing action
-        printf("\n$%s\t%s$\t", stk, a);
+	std::cout << "\n$" << stk << "\t" << a << "$\t";
 
         // Call check function ..which will
         // check the stack whether its contain
