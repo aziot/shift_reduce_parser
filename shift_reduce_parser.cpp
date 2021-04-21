@@ -1,5 +1,7 @@
 // Including Libraries
 #include <bits/stdc++.h>
+#include <vector>
+
 using namespace std;
 
 // Global Variables
@@ -7,10 +9,12 @@ int z = 0, i = 0, j = 0, c = 0;
 
 // Modify array size to increase
 // length of string to be parsed
-char a[16], ac[20], stk[15], act[10];
+char a[16], ac[20], act[10];
+
+std::vector<char> stk;
 
 // This Function will check whether
-// the stack contain a production rule
+// the stk contain a production rule
 // which is to be Reduce.
 // Rules can be E->2E2 , E->3E3 , E->4
 void check()
@@ -28,8 +32,12 @@ void check()
             stk[z] = 'E';
             stk[z + 1] = '\0';
 
-            //pinting action
-            printf("\n$%s\t%s$\t", stk, a);
+            //printing action
+            std::cout << "\n$";
+	    for (int cnt = 0; cnt < stk.size(); cnt++) {
+		    std::cout << stk[cnt];
+	    }
+	    std::cout << "\t" << a << "$\t";
         }
     }
 
@@ -43,7 +51,11 @@ void check()
             stk[z] = 'E';
             stk[z + 1] = '\0';
             stk[z + 2] = '\0';
-            printf("\n$%s\t%s$\t", stk, a);
+	    std::cout << "\n$";
+	    for (int cnt = 0; cnt < stk.size(); cnt++) {
+		    std::cout << stk[cnt];
+	    }
+	    std::cout << "\t" << a << "$\t";
             i = i - 2;
         }
 
@@ -59,7 +71,11 @@ void check()
             stk[z]='E';
             stk[z + 1]='\0';
             stk[z + 1]='\0';
-            printf("\n$%s\t%s$\t", stk, a);
+	    std::cout << "\n$";
+	    for (int cnt=0; cnt < stk.size(); cnt++) {
+		    std::cout << stk[cnt];
+	    }
+	    std::cout << "\t" << a << "$\t";
             i = i - 2;
         }
     }
@@ -81,30 +97,34 @@ int main()
     strcpy(act,"SHIFT");
 
     // This will print Lables (column name)
-    std::cout << "\nstack \t input \t action";
+    std::cout << "\nstk \t input \t action";
 
     // This will print the initial
-    // values of stack and input
+    // values of stk and input
     std::cout << "\n$\t" << a << "$\t";
 
     // This will Run upto length of input string
-    for(int i = 0; j < c; i++, j++)
+    for(i = 0; j < c; i++, j++)
     {
         // Printing action
         std::cout << act;
 
-        // Pushing into stack
-        stk[i] = a[j];
-        stk[i + 1] = '\0';
+        // Pushing into stk
+        stk.push_back(a[j]);
+        stk.push_back('\0');
 
         // Moving the pointer
         a[j]=' ';
 
         // Printing action
-	std::cout << "\n$" << stk << "\t" << a << "$\t";
+        std::cout << "\n$";
+        for (int cnt = 0; cnt < stk.size(); cnt++) {
+            std::cout << stk[cnt];
+        }
+        std::cout << "\t" << a << "$\t";
 
         // Call check function ..which will
-        // check the stack whether its contain
+        // check the stk whether its contain
         // any production or not
         check();
     }
@@ -114,7 +134,7 @@ int main()
     // replace otherwise invalid
     check();
 
-    // if top of the stack is E(starting symbol)
+    // if top of the stk is E(starting symbol)
     // then it will accept the input
     if(stk[0] == 'E' && stk[1] == '\0')
         printf("Accept\n");
