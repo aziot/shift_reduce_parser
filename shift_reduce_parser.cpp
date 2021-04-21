@@ -9,7 +9,9 @@ int z = 0, i = 0, j = 0, c = 0;
 
 // Modify array size to increase
 // length of string to be parsed
-char ac[20], act[10];
+char act[10];
+
+const char kAction[] = "REDUCE TO E -> ";
 
 // This Function will check whether
 // the stk contain a production rule
@@ -17,16 +19,13 @@ char ac[20], act[10];
 // Rules can be E->2E2 , E->3E3 , E->4
 void check(const std::string& input, std::vector<char>* stack)
 {
-    // Coping string to be printed as action
-    strcpy(ac,"REDUCE TO E -> ");
-
     // c=length of input string
     for(z = 0; z < c; z++)
     {
         // checking for producing rule E->4
         if((*stack)[z] == '4')
         {
-            printf("%s4", ac);
+            std::cout << kAction << "4";
             (*stack)[z] = 'E';
             (*stack)[z + 1] = '\0';
 
@@ -45,7 +44,7 @@ void check(const std::string& input, std::vector<char>* stack)
         if((*stack)[z] == '2' && (*stack)[z + 1] == 'E' &&
                 (*stack)[z + 2] == '2')
         {
-            printf("%s2E2", ac);
+            std::cout << kAction << "2E2";
             (*stack)[z] = 'E';
             (*stack)[z + 1] = '\0';
             (*stack)[z + 2] = '\0';
@@ -65,7 +64,7 @@ void check(const std::string& input, std::vector<char>* stack)
         if((*stack)[z] == '3' && (*stack)[z + 1] == 'E' &&
                 (*stack)[z + 2] == '3')
         {
-            printf("%s3E3", ac);
+            std::cout << kAction << "3E3";
             (*stack)[z]='E';
             (*stack)[z + 1]='\0';
             (*stack)[z + 1]='\0';
