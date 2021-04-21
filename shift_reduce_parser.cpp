@@ -7,10 +7,6 @@ using namespace std;
 // Global Variables
 int z = 0, i = 0, j = 0, c = 0;
 
-// Modify array size to increase
-// length of string to be parsed
-char act[10];
-
 const char kAction[] = "REDUCE TO E -> ";
 
 // This Function will check whether
@@ -109,9 +105,6 @@ int main()
     // strlen(a) will return the length of a to c
     c = input.length();
 
-    // "SHIFT" is copied to act to be printed
-    strcpy(act,"SHIFT");
-
     // This will print Labels (column name)
     std::cout << std::endl << "stack \t input \t action";
 
@@ -123,7 +116,7 @@ int main()
     for(i = 0; j < input.length() ; i++, j++)
     {
         // Printing action
-        std::cout << act;
+        std::cout << "SHIFT";
 
         // Pushing into stk
         demo.stack.push_back(input[j]);
