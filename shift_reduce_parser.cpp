@@ -5,7 +5,7 @@
 using namespace std;
 
 // Global Variables
-int z = 0, i = 0, j = 0, c = 0;
+int z = 0, i = 0, j = 0;
 
 const std::vector<std::string> kGrammarRules= { "E->2E2", "E->3E3", "E->4" };
 static const char kAction[] = "REDUCE TO E -> ";
@@ -26,7 +26,6 @@ struct ShiftReduceParserDemo {
     }
 };
 
-
 // This Function will check whether
 // the stk contain a production rule
 // which is to be Reduce.
@@ -34,7 +33,7 @@ struct ShiftReduceParserDemo {
 void check(const std::string& input, std::vector<char>* stack)
 {
     // c=length of input string
-    for(z = 0; z < c; z++)
+    for(z = 0; z < input.length(); z++)
     {
         // checking for producing rule E->4
         if((*stack)[z] == '4')
@@ -44,7 +43,7 @@ void check(const std::string& input, std::vector<char>* stack)
             (*stack)[z + 1] = '\0';
 
             //printing action
-            std::cout << "\n$";
+            std::cout << std::endl << "$";
             for (int cnt = 0; cnt < stack->size(); cnt++) {
                 std::cout << (*stack)[cnt];
             }
@@ -52,7 +51,7 @@ void check(const std::string& input, std::vector<char>* stack)
         }
     }
 
-    for(z = 0; z < c - 2; z++)
+    for(z = 0; z < input.length() - 2; z++)
     {
         // checking for another production
         if((*stack)[z] == '2' && (*stack)[z + 1] == 'E' &&
@@ -69,10 +68,9 @@ void check(const std::string& input, std::vector<char>* stack)
             std::cout << "\t" << input << "$\t";
             i = i - 2;
         }
-
     }
 
-    for(z = 0; z < c - 2; z++)
+    for(z = 0; z < input.length() - 2; z++)
     {
         //checking for E->3E3
         if((*stack)[z] == '3' && (*stack)[z + 1] == 'E' &&
@@ -101,9 +99,6 @@ int main()
     ShiftReduceParserDemo demo;
 
     std::string input("32423");
-
-    // strlen(a) will return the length of a to c
-    c = input.length();
 
     // This will print Labels (column name)
     std::cout << std::endl << "stack \t input \t action";
