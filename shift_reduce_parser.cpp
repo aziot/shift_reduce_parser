@@ -34,10 +34,10 @@ void check()
 
             //printing action
             std::cout << "\n$";
-	    for (int cnt = 0; cnt < stk.size(); cnt++) {
-		    std::cout << stk[cnt];
-	    }
-	    std::cout << "\t" << a << "$\t";
+            for (int cnt = 0; cnt < stk.size(); cnt++) {
+                std::cout << stk[cnt];
+            }
+            std::cout << "\t" << a << "$\t";
         }
     }
 
@@ -51,11 +51,11 @@ void check()
             stk[z] = 'E';
             stk[z + 1] = '\0';
             stk[z + 2] = '\0';
-	    std::cout << "\n$";
-	    for (int cnt = 0; cnt < stk.size(); cnt++) {
-		    std::cout << stk[cnt];
-	    }
-	    std::cout << "\t" << a << "$\t";
+            std::cout << "\n$";
+            for (int cnt = 0; cnt < stk.size(); cnt++) {
+                std::cout << stk[cnt];
+            }
+            std::cout << "\t" << a << "$\t";
             i = i - 2;
         }
 
@@ -71,21 +71,32 @@ void check()
             stk[z]='E';
             stk[z + 1]='\0';
             stk[z + 1]='\0';
-	    std::cout << "\n$";
-	    for (int cnt=0; cnt < stk.size(); cnt++) {
-		    std::cout << stk[cnt];
-	    }
-	    std::cout << "\t" << a << "$\t";
+            std::cout << "\n$";
+            for (int cnt=0; cnt < stk.size(); cnt++) {
+                std::cout << stk[cnt];
+            }
+            std::cout << "\t" << a << "$\t";
             i = i - 2;
         }
     }
     return ; // return to main
 }
 
+const std::vector<std::string> kGrammarRules= { "E->2E2", "E->3E3", "E->4" };
+struct ShiftReduceParserDemo {
+
+    static void print_rules() {
+        std::cout << "GRAMMAR is" << std::endl;
+        for (const std::string& rule : kGrammarRules) {
+            std::cout << rule << std::endl;
+        }
+    }
+};
+
 // Driver Function
 int main()
-{
-    std::cout << "GRAMMAR is -\nE->2E2 \nE->3E3 \nE->4\n";
+{ 
+    ShiftReduceParserDemo::print_rules();
 
     // a is input string
     std::string a("32423");
