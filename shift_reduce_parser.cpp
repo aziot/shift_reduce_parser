@@ -7,7 +7,25 @@ using namespace std;
 // Global Variables
 int z = 0, i = 0, j = 0, c = 0;
 
-const char kAction[] = "REDUCE TO E -> ";
+const std::vector<std::string> kGrammarRules= { "E->2E2", "E->3E3", "E->4" };
+static const char kAction[] = "REDUCE TO E -> ";
+struct ShiftReduceParserDemo {
+    std::vector<char> stack;
+
+    void printStack() {
+        for (int cnt = 0; cnt < stack.size(); cnt++) {
+            std::cout << stack[cnt];
+        }
+    }
+
+    static void print_rules() {
+        std::cout << "GRAMMAR is" << std::endl;
+        for (const std::string& rule : kGrammarRules) {
+            std::cout << rule << std::endl;
+        }
+    }
+};
+
 
 // This Function will check whether
 // the stk contain a production rule
@@ -74,24 +92,6 @@ void check(const std::string& input, std::vector<char>* stack)
     }
     return ; // return to main
 }
-
-const std::vector<std::string> kGrammarRules= { "E->2E2", "E->3E3", "E->4" };
-struct ShiftReduceParserDemo {
-    std::vector<char> stack;
-
-    void printStack() {
-        for (int cnt = 0; cnt < stack.size(); cnt++) {
-            std::cout << stack[cnt];
-        }
-    }
-
-    static void print_rules() {
-        std::cout << "GRAMMAR is" << std::endl;
-        for (const std::string& rule : kGrammarRules) {
-            std::cout << rule << std::endl;
-        }
-    }
-};
 
 // Driver Function
 int main()
