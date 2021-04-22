@@ -23,49 +23,49 @@ struct ShiftReduceParserDemo {
             std::cout << rule << std::endl;
         }
     }
+
+    // This Function will check whether
+    // the stk contain a production rule
+    // which is to be Reduce.
+    // Rules can be E->2E2 , E->3E3 , E->4
+    bool check()
+    {
+        // checking for producing rule E->4
+        if(stack.back() == '4')
+        {
+            std::cout << kAction << "4";
+            stack.pop_back();
+            stack.push_back('E');
+            return true;
+        }
+
+        // checking for another production
+        if(*(stack.end()-2) == '2' && *(stack.end()-1) == 'E' &&
+                stack.back() == '2')
+        {
+            std::cout << kAction << "2E2";
+            stack.pop_back();
+            stack.pop_back();
+            stack.pop_back();
+            stack.push_back('E');
+
+            return true;
+        }
+
+        //checking for E->3E3
+        if(*(stack.end()-2) == '3' && *(stack.end()-1) == 'E' &&
+                stack.back() == '3')
+        {
+            std::cout << kAction << "3E3";
+            stack.pop_back();
+            stack.pop_back();
+            stack.pop_back();
+            stack.push_back('E');
+            return true;
+        }
+        return false; // return to main
+    }
 };
-
-// This Function will check whether
-// the stk contain a production rule
-// which is to be Reduce.
-// Rules can be E->2E2 , E->3E3 , E->4
-bool check(ShiftReduceParserDemo* demo)
-{
-    // checking for producing rule E->4
-    if(demo->stack.back() == '4')
-    {
-        std::cout << kAction << "4";
-        demo->stack.pop_back();
-        demo->stack.push_back('E');
-        return true;
-    }
-
-    // checking for another production
-    if(*(demo->stack.end()-2) == '2' && *(demo->stack.end()-1) == 'E' &&
-            demo->stack.back() == '2')
-    {
-        std::cout << kAction << "2E2";
-        demo->stack.pop_back();
-        demo->stack.pop_back();
-        demo->stack.pop_back();
-        demo->stack.push_back('E');
-
-        return true;
-    }
-
-    //checking for E->3E3
-    if(*(demo->stack.end()-2) == '3' && *(demo->stack.end()-1) == 'E' &&
-            demo->stack.back() == '3')
-    {
-        std::cout << kAction << "3E3";
-        demo->stack.pop_back();
-        demo->stack.pop_back();
-        demo->stack.pop_back();
-        demo->stack.push_back('E');
-        return true;
-    }
-    return false; // return to main
-}
 
 // Driver Function
 int main()
@@ -97,7 +97,7 @@ int main()
         // Call check function ..which will
         // check the stk whether its contain
         // any production or not
-        if (check(&demo)) {
+        if (demo.check()) {
             demo.printState(input);
         }
     }
@@ -105,7 +105,7 @@ int main()
     // Rechecking last time if contain
     // any valid production then it will
     // replace otherwise invalid
-    if (check(&demo)) {
+    if (demo.check()) {
         demo.printState(input);
     }
 
