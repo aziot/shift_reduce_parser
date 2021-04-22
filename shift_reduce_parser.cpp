@@ -5,7 +5,7 @@
 using namespace std;
 
 const std::vector<std::string> kGrammarRules= { "E->2E2", "E->3E3", "E->4" };
-static const char kAction[] = "REDUCE TO E -> ";
+static const char kAction[] = "REDUCE E -> ";
 struct ShiftReduceParserDemo {
     std::vector<char> stack;
 
@@ -68,51 +68,51 @@ struct ShiftReduceParserDemo {
 };
 
 // Driver Function
-int main()
+int main(int argc, char*argv[])
 {
+    if (argc != 2) {
+	    std::cerr << "Wrong number of arguments." << std::endl;
+	    std::cerr << "Usage: ./shift_reduce_parser <expression>" << std::endl;
+
+	    return -1;
+    }
+    const std::string input(argv[1]);
+    
+    ShiftReduceParserDemo demo;
     ShiftReduceParserDemo::print_rules();
 
-    ShiftReduceParserDemo demo;
-
-    const std::string input("32423");
-
-    // This will print Labels (column name)
-    std::cout << std::endl << "stack \t input \t action";
+    std::cout << std::endl << "stack \tinput \taction";
 
     // This will print the initial
-    // values of stk and input
-    std::cout << "\n$\t" << input << "$\t";
+    // values of the stack and input
+    std::cout << std::endl << "$\t" << input << "$\t";
 
-    // This will Run upto length of input string
     for(int i = 0; i < input.length() ; i++)
     {
-        // Printing action
         std::cout << "SHIFT";
 
-        // Pushing into stk
+        // Pushing into the stack
         demo.stack.push_back(input[i]);
         demo.printState(input, i+1);
 
-        // Call check function ..which will
-        // check the stk whether its contain
+        // Call the check function which will
+        // check the stack whether it contains
         // any production or not
         if (demo.check()) {
             demo.printState(input, i+1);
         }
     }
 
-    // Rechecking last time if contain
-    // any valid production then it will
-    // replace otherwise invalid
+    // Rechecking last time if it contains
+    // any valid production
     if (demo.check()) {
         demo.printState(input);
     }
 
-    // if top of the stk is E(starting symbol)
+    // If the top of the stack is E(starting symbol)
     // then it will accept the input
     if(demo.stack[0] == 'E' && demo.stack.size() == 1)
         std::cout << "Accept" << std::endl;
-    else //else reject
+    else  // reject
         std::cout << "Reject" << std::endl;
 }
-// This code is contributed by Shubhamsingh10
