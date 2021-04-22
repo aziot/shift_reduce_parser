@@ -24,9 +24,7 @@ struct ShiftReduceParserDemo {
         }
     }
 
-    // This Function will check whether
-    // the stk contain a production rule
-    // which is to be Reduce.
+    // This Function will check whether the stack contains a production rule which is to be reduced.
     // Rules can be E->2E2 , E->3E3 , E->4
     bool check()
     {
@@ -71,20 +69,19 @@ struct ShiftReduceParserDemo {
 int main(int argc, char*argv[])
 {
     if (argc != 2) {
-	    std::cerr << "Wrong number of arguments." << std::endl;
-	    std::cerr << "Usage: ./shift_reduce_parser <expression>" << std::endl;
+        std::cerr << "Wrong number of arguments." << std::endl;
+        std::cerr << "Usage: ./shift_reduce_parser <expression>" << std::endl;
 
-	    return -1;
+        return -1;
     }
     const std::string input(argv[1]);
-    
+
     ShiftReduceParserDemo demo;
     ShiftReduceParserDemo::print_rules();
 
     std::cout << std::endl << "stack \tinput \taction";
 
-    // This will print the initial
-    // values of the stack and input
+    // This will print the initial values of the stack and input
     std::cout << std::endl << "$\t" << input << "$\t";
 
     for(int i = 0; i < input.length() ; i++)
@@ -95,22 +92,18 @@ int main(int argc, char*argv[])
         demo.stack.push_back(input[i]);
         demo.printState(input, i+1);
 
-        // Call the check function which will
-        // check the stack whether it contains
-        // any production or not
+        // Call the check function which will check the stack whether it contains any production or not
         if (demo.check()) {
             demo.printState(input, i+1);
         }
     }
 
-    // Rechecking last time if it contains
-    // any valid production
+    // Rechecking last time if it contains any valid production
     if (demo.check()) {
         demo.printState(input);
     }
 
-    // If the top of the stack is E(starting symbol)
-    // then it will accept the input
+    // If the top of the stack is E(starting symbol) then it will accept the input
     if(demo.stack[0] == 'E' && demo.stack.size() == 1)
         std::cout << "Accept" << std::endl;
     else  // reject
