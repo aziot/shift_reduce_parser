@@ -40,7 +40,7 @@ struct ShiftReduceParserDemo {
         }
 
         // checking for another production
-        if(*(stack.end()-2) == '2' && *(stack.end()-1) == 'E' &&
+        if(*(stack.end()-3) == '2' && *(stack.end()-2) == 'E' &&
                 stack.back() == '2')
         {
             std::cout << kAction << "2E2";
@@ -53,7 +53,7 @@ struct ShiftReduceParserDemo {
         }
 
         //checking for E->3E3
-        if(*(stack.end()-2) == '3' && *(stack.end()-1) == 'E' &&
+        if(*(stack.end()-3) == '3' && *(stack.end()-2) == 'E' &&
                 stack.back() == '3')
         {
             std::cout << kAction << "3E3";
@@ -91,14 +91,13 @@ int main()
 
         // Pushing into stk
         demo.stack.push_back(input[i]);
-
         demo.printState(input, i+1);
 
         // Call check function ..which will
         // check the stk whether its contain
         // any production or not
         if (demo.check()) {
-            demo.printState(input);
+            demo.printState(input, i+1);
         }
     }
 
